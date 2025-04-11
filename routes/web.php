@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 用户添加路由
+Route::get('user/add', [UserController::class,'add']);
+// 用户执行添加路由
+Route::post('user/addstore', [UserController::class,'addstore']);
+
+// 用户列表页路由
+Route::get('user/index', [UserController::class,'index']);
+
+// 用户修改路由
+Route::get('user/edit/{id}', [UserController::class,'edit']);
+
+// 用户修改提交
+Route::post('user/update', [UserController::class,'update']);
+
+// 用户删除路由
+Route::get('user/del/{id}', [UserController::class,'destroy']);
