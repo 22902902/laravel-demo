@@ -38,7 +38,11 @@ Route::post('user/update', [UserController::class,'update']);
 Route::get('user/del/{id}', [UserController::class,'destroy']);
 */
 
+// 用户登录
 Route::get('admin/login', [LoginController::class,'login']);
 
 // 生成验证码图片
 Route::get('captcha/{config?}', [\Mews\Captcha\CaptchaController::class,'getCaptcha'])->middleware('web');
+
+// 用户登录处理
+Route::post('admin/doLogin', [LoginController::class,'doLogin']);

@@ -22,16 +22,32 @@
     <div class="message">x-admin2.0-管理登录</div>
     <div id="darkbannerwrap"></div>
 
-    <form method="post" class="layui-form" >
+    <form method="post"  action="{{ url('admin/doLogin') }}" ><!-- class="layui-form" -->
+        <!-- post直接提交会报错419，需要加个token -->
+        {{ csrf_field() }}
         <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+        @error('username')
+        <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+        @enderror
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+        @enderror
         <hr class="hr15">
         <!-- 验证码 -->
         <input name="captcha" style="height:40px; width: 150px;float:left;" lay-verify="required" placeholder="验证码"  type="text" class="layui-input">
         <!-- 正确写法（使用 captcha_src() 生成验证码URL） -->
         <img src="{{ captcha_src() }}" onclick="this.src='{{ captcha_src() }}?'+Math.random()" style="float:right;">
-
+        @error('captcha')
+        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+        @enderror
 
         <hr class="hr15">
         <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
@@ -40,22 +56,22 @@
 </div>
 
 <script>
-    $(function  () {
-        layui.use('form', function(){
-            var form = layui.form;
-            // layer.msg('玩命卖萌中', function(){
-            //   //关闭后的操作
-            //   });
-            //监听提交
-            form.on('submit(login)', function(data){
-                // alert(888)
-                layer.msg(JSON.stringify(data.field),function(){
-                    location.href='index.html'
-                });
-                return false;
-            });
-        });
-    })
+    // $(function  () {
+    //     layui.use('form', function(){
+    //         var form = layui.form;
+    //         // layer.msg('玩命卖萌中', function(){
+    //         //   //关闭后的操作
+    //         //   });
+    //         //监听提交
+    //         form.on('submit(login)', function(data){
+    //             // alert(888)
+    //             layer.msg(JSON.stringify(data.field),function(){
+    //                 location.href='login'
+    //             });
+    //             return false;
+    //         });
+    //     });
+    // })
 
 
 </script>
