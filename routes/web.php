@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/**
 // 用户添加路由
 Route::get('user/add', [UserController::class,'add']);
 // 用户执行添加路由
@@ -34,3 +36,9 @@ Route::post('user/update', [UserController::class,'update']);
 
 // 用户删除路由
 Route::get('user/del/{id}', [UserController::class,'destroy']);
+*/
+
+Route::get('admin/login', [LoginController::class,'login']);
+
+// 生成验证码图片
+Route::get('captcha/{config?}', [\Mews\Captcha\CaptchaController::class,'getCaptcha'])->middleware('web');
