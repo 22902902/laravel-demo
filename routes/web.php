@@ -38,11 +38,30 @@ Route::post('user/update', [UserController::class,'update']);
 Route::get('user/del/{id}', [UserController::class,'destroy']);
 */
 
-// 用户登录
-Route::get('admin/login', [LoginController::class,'login']);
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'],function (){
+    // 用户登录
+    Route::get('login', [LoginController::class,'login']);
+
+    // 用户登录处理
+    Route::post('doLogin', [LoginController::class,'doLogin']);
+});
+
 
 // 生成验证码图片
 Route::get('captcha/{config?}', [\Mews\Captcha\CaptchaController::class,'getCaptcha'])->middleware('web');
 
-// 用户登录处理
-Route::post('admin/doLogin', [LoginController::class,'doLogin']);
+
+// Route::group 路由组，prefix：前缀，namespace: 命名空间， middleware: 中间件 ,起名字 islogin
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLogin'],function (){
+    // 首页
+    Route::get('index', [LoginController::class,'index']);
+
+    // 后台欢迎页
+    Route::get('welcome', [LoginController::class,'welcome']);
+
+    // 后台退出登录
+    Route::get('logout', [LoginController::class,'logout']);
+});
+
+

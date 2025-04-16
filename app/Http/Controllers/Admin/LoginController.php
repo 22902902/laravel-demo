@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use MongoDB\Driver\Session;
 
 /**
  * 登录
@@ -26,6 +27,9 @@ class LoginController extends Controller
 
     // 处理用户登录到方法
     public function doLogin(Request $request) {
+
+        //dd(session()->get('captcha'));
+
         // 1. 接收表单提交的数据
         $input = $request->except('_token');
         //dd($input);
@@ -74,6 +78,9 @@ class LoginController extends Controller
 
         // 首先验证，验证码
         //dd(session()->get('captcha'));
+//        if($input['captcha'] !== Session::get('captcha.key')) {
+//            return back()->withErrors(['captcha' => '验证码错误']);
+//        }
 
         $user = User::where('username',$input['username'])->first();
         //dd($user);
@@ -98,5 +105,23 @@ class LoginController extends Controller
         // 5.跳转到后台首页
         return redirect('admin/index');
 
+    }
+
+    // 后台首页
+    public function index() {
+        return view('admin/index');
+    }
+
+    // 后台欢迎页
+    public function welcome() {
+        return view('admin/welcome');
+    }
+
+    // 退出登录
+    public function logout() {
+        // 清空session中的用户信息
+        session()->flush();
+        // 跳转到登录页面
+        return redirect('admin/login');
     }
 }

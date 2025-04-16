@@ -42,11 +42,11 @@
         <!-- 验证码 -->
         <input name="captcha" style="height:40px; width: 150px;float:left;" lay-verify="required" placeholder="验证码"  type="text" class="layui-input">
         <!-- 正确写法（使用 captcha_src() 生成验证码URL） -->
-        <img src="{{ captcha_src() }}" onclick="this.src='{{ captcha_src() }}?'+Math.random()" style="float:right;">
+        <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}?t='+Date.now()" style="float:right;" title="点击刷新验证码" >
         @error('captcha')
-        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
         @enderror
 
         <hr class="hr15">
