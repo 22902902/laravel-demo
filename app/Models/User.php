@@ -26,6 +26,9 @@ class User extends Authenticatable
      *
      * The attributes that are mass assignable.
      *
+     * 可以没有不允许的字段
+     * public $guarded = [];
+     *
      * @var array
      */
     protected $fillable = [
@@ -34,8 +37,12 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    //public $guarded = [];
 
-    // 4.禁用时间戳,有这俩字段，没必要禁
+    /**
+     * 4.是否维护crated_at 和 updated_at字段
+     * 禁用时间戳,有这俩字段，没必要禁
+     */
     // public $timestamps = false;
 
     /**
