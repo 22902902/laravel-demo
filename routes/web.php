@@ -62,6 +62,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLo
 
     // 后台退出登录
     Route::get('logout', [LoginController::class,'logout']);
+
+    // 用户模块相关路由 -- 资源路由
+    Route::resource('user','\App\Http\Controllers\Admin\UserController');
 });
 
 

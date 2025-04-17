@@ -14,15 +14,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="member-list.html">
+                        <a _href="{{ url('admin/user') }}">
                             <i class="sub_arrow"></i>
                             <cite>会员列表</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
+                        <a _href="{{ url('admin/user/create') }}">
                             <i class="sub_arrow"></i>
-                            <cite>会员删除</cite>
+                            <cite>添加会员</cite>
 
                         </a>
                     </li>
