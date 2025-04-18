@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLo
     Route::get('logout', [LoginController::class,'logout']);
 
     // 用户模块相关路由 -- 资源路由
+    Route::get('user/del', [UserController::class,'delAll']); //\App\Http\Controllers\Admin\UserController@delAll
     Route::resource('user','\App\Http\Controllers\Admin\UserController');
 });
 

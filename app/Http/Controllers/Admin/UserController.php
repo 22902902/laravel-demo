@@ -77,18 +77,19 @@ class UserController extends Controller
         ]);
 
         // 4.根据添加是否成功，给客户端返回一个json格式的反馈
-        if($res) {
-            $data = [
-                'status' => 0,
-                'message' => '添加成功',
-            ];
-        } else {
-            $data = [
-                'status' => 1,
-                'message' => '添加失败',
-            ];
-        }
-        return $data;
+//        if($res) {
+//            $data = [
+//                'status' => 0,
+//                'message' => '添加成功',
+//            ];
+//        } else {
+//            $data = [
+//                'status' => 1,
+//                'message' => '添加失败',
+//            ];
+//        }
+//        return $data;
+        return $this->msg($res, "添加");
     }
 
     /**
@@ -114,7 +115,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $user = User::find($id);
+        return view('admin.user.edit',compact('user'));
     }
 
     /**
@@ -128,7 +131,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // 1.根据ID获取要修改的记录
+        $user = User::find($id);
+        // 2.获取要修改成的用户名
+        if($user->email !== $request->input('email')) {
+            $user->email = $request->input('email');
+        }
+
+        if($user->username !== $request->input('username')) {
+            $user->username = $request->input('username');
+        }
+
+        if($user->name !== $request->input('name')) {
+            $user->name = $request->input('name');
+        }
+
+        $res = $user->save();
+//        if($res) {
+//            $data = [
+//                'status' => 0,
+//                'message' => '修改成功'
+//            ];
+//        } else {
+//            $data = [
+//                'status' => 1,
+//                'message' => '修改失败'
+//            ];
+//        }
+//        return $data;
+        return $this->msg($res, "修改");
     }
 
     /**
@@ -141,7 +172,50 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // 1.获取用户
+        $user = User::find($id);
+        $res = $user->delete();
+//        if($res) {
+//            $data = [
+//                'status' => 0,
+//                'message' => '删除成功'
+//            ];
+//        } else {
+//            $data = [
+//                'status' => 1,
+//                'message' => '删除失败'
+//            ];
+//        }
+//        return $data;
+        return $this->msg($res, "删除");
+    }
 
+    /**
+     * 提示信息
+     * @param $res
+     * @param $msg
+     */
+    private function msg($res, $msg) {
+        if($res) {
+            $data = [
+                'status' => 0,
+                'message' => $msg .'成功'
+            ];
+        } else {
+            $data = [
+                'status' => 1,
+                'message' => $msg .'失败'
+            ];
+        }
+        return $data;
+    }
+
+    /**
+     * 删除所有选中用户
+     */
+    public function delAll(Request $request) {
+        $input = $request->input('ids');
+        $res = User::destroy($input);
+        return $this->msg($res, "全部删除");
     }
 }

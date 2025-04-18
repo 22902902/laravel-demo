@@ -72,7 +72,7 @@
         @foreach($user as $item)
         <tr>
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{ $item->id }}'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td>{{ $item->id }}</td>
             <td>{{ $item->username }}</td>
@@ -82,16 +82,16 @@
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
             <td class="td-manage">
-                <a class="layui-btn s_color1" onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-                    <i class="layui-icon">&#xe601;</i>
-                </a>
-                <a class="layui-btn s_color2" title="编辑" onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
+{{--                <a class="layui-btn s_color1" onclick="member_stop(this,'10001')" href="javascript:;" title="启用">--}}
+{{--                    <i class="layui-icon">&#xe601;</i>--}}
+{{--                </a>--}}
+                <a class="layui-btn s_color2" title="编辑" onclick="x_admin_show('编辑','{{ url('admin/user/'. $item->id .'/edit') }}',600,400)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a class="layui-btn s_color3" onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
-                    <i class="layui-icon">&#xe631;</i>
-                </a>
-                <a class="layui-btn s_color4" title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+{{--                <a class="layui-btn s_color3" onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">--}}
+{{--                    <i class="layui-icon">&#xe631;</i>--}}
+{{--                </a>--}}
+                <a class="layui-btn s_color4" title="删除" onclick="member_del(this,{{ $item->id }})" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
@@ -160,12 +160,34 @@
     /*用户-删除*/
     function member_del(obj, id) {
         layer.confirm('确认要删除吗？', function(index) {
+
+            // 删除直接跟id就行
+            $.post('/admin/user/'+id, {
+                "_method":"delete",
+                "_token":"{{ csrf_token() }}"},
+                function(data) {
+                    //console.log(data);
+                    if(data.status == 0) {
+                        $(obj).parents("tr").remove();
+                        layer.msg(data.message, {
+                            icon: 6,
+                            time: 1000
+                        });
+                    } else {
+                        layer.msg(data.message, {
+                            icon: 5,
+                            time: 1000
+                        });
+                    }
+            })
+
+
             //发异步删除数据
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!', {
-                icon: 1,
-                time: 1000
-            });
+            // $(obj).parents("tr").remove();
+            // layer.msg('已删除!', {
+            //     icon: 1,
+            //     time: 1000
+            // });
         });
     }
 
@@ -173,14 +195,35 @@
 
     function delAll(argument) {
 
-        var data = tableCheck.getData();
+        // 获取到要批量删除的用户的id
+        var ids = [];
+        $(".layui-form-checked").not('.header').each(function (i, v) {
+            var u = $(v).attr('data-id');
+            ids.push(u);
+        })
 
-        layer.confirm('确认要删除吗？' + data, function(index) {
+        //var data = tableCheck.getData();
+
+        layer.confirm('确认要删除吗？', function(index) {
+            $.get('/admin/user/del',{'ids':ids},function (data) {
+                if(data.status == 0) {
+                    $(".layui-form-checked").not('.header').parents('tr').remove();
+                    layer.msg(data.message, {
+                        icon: 6,
+                        time: 1000
+                    });
+                } else {
+                    layer.msg(data.message, {
+                        icon: 5,
+                        time: 1000
+                    });
+                }
+            })
             //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {
-                icon: 1
-            });
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+            // layer.msg('删除成功', {
+            //     icon: 1
+            // });
+            // $(".layui-form-checked").not('.header').parents('tr').remove();
         });
     }
 </script>
