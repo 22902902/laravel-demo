@@ -66,6 +66,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLo
     // 用户模块相关路由 -- 资源路由
     Route::get('user/del', [UserController::class,'delAll']); //\App\Http\Controllers\Admin\UserController@delAll
     Route::resource('user','\App\Http\Controllers\Admin\UserController');
+
+    // 角色模块
+    Route::resource('role','\App\Http\Controllers\Admin\RoleController');
+    // 角色授权路由
+    Route::get('role/auth/{id}', [RoleController::class,'auth']);
+
 });
 
 

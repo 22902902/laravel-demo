@@ -61,6 +61,28 @@
             </li>
             <li>
                 <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>角色管理</cite>
+                    <i class="iconfont nav_right">&#xe6a7;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{ url('admin/role') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>角色列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ url('admin/role/create') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>添加角色</cite>
+
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
                     <cite>订单管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
@@ -112,13 +134,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="admin-list.html">
+                        <a _href="{{ url('admin/user') }}">
                             <i class="sub_arrow"></i>
                             <cite>管理员列表</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="admin-role.html">
+                        <a _href="{{ url('admin/role') }}">
                             <i class="sub_arrow"></i>
                             <cite>角色管理</cite>
                         </a>
