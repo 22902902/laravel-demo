@@ -4,12 +4,56 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    /**
+     * 用户模块给角色
+     */
+    public function auth($id) {
+        // 1.获取当前用户名称
+        $user = User::find($id);
+        // 获取所有的角色列表
+        $perms = Role::get();
+
+        // 获取当前用户的所有角色
+        $own_perms = $user->role;
+
+        // 用户拥有的角色的ID
+        $own_pers = [];
+        foreach ($own_perms as $item) {
+            $own_pers[] = $item->id;
+        }
+
+        return view('admin.user.auth',compact('user', 'perms', 'own_pers'));
+    }
+
+    /**
+     * 处理授权
+     */
+    public function doAuth(Request $request) {
+        $input = $request->except('_token');
+        //dd($input);
+
+        // 先删除当前用户已有的角色
+        \DB::table('user_role')->where('user_id',$input['user_id'])->delete();
+
+        if(!empty($input['role_id'])) {
+            // 添加新授予的权限
+            foreach ($input['role_id'] as $item) {
+                \DB::table('user_role')->insert(['user_id'=>$input['user_id'], 'role_id' => $item]);
+            }
+        }
+
+        return redirect('admin/user');
+
+    }
+
     /**
      * 获取用户列表页
      *

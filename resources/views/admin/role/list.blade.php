@@ -37,7 +37,7 @@
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','{{ url('admin/role/create') }}',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px"></span>
     </xblock>
     <table class="layui-table" lay-even lay-skin="line">
         <thead>
@@ -65,7 +65,7 @@
 {{--                    <i class="layui-icon">&#xe601;</i>--}}
 {{--                </a>--}}
                 <a class="layui-btn s_color3" title="授权" href="{{ url('admin/role/auth/' . $item->id) }}">
-                    <i class="layui-icon">&#xe643;</i>
+                    <i class="layui-icon">&#xe612;</i>
                 </a>
                 <a class="layui-btn s_color2" title="编辑" onclick="x_admin_show('编辑','{{ url('admin/role/'. $item->id .'/edit') }}',600,400)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>

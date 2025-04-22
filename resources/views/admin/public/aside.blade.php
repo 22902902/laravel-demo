@@ -83,6 +83,28 @@
             </li>
             <li>
                 <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>权限管理</cite>
+                    <i class="iconfont nav_right">&#xe6a7;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{ url('admin/permission') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>权限列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ url('admin/permission/create') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>添加权限</cite>
+
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
                     <cite>订单管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>

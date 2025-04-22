@@ -124,4 +124,9 @@ class LoginController extends Controller
         // 跳转到登录页面
         return redirect('admin/login');
     }
+
+    // 没有权限，对应的跳转
+    public function noaccess() {
+        return view('errors.noaccess');
+    }
 }

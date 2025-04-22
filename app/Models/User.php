@@ -63,4 +63,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // 添加动态属性，关联权限模型
+    public function role() {
+        // 关联Permission模型，关联表表名，当前模型在关联表中的主键,被关联模型在关联表上的主键
+        return $this->belongsToMany('App\Models\Role','user_role','user_id','role_id');
+    }
 }

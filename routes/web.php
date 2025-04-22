@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,9 +52,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'],function (){
 // 生成验证码图片
 Route::get('captcha/{config?}', [\Mews\Captcha\CaptchaController::class,'getCaptcha'])->middleware('web');
 
+Route::get('noaccess',[LoginController::class,'noaccess']);
 
 // Route::group 路由组，prefix：前缀，namespace: 命名空间， middleware: 中间件 ,起名字 islogin
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLogin'],function (){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['hasRole','isLogin']],function (){
     // 首页
     Route::get('index', [LoginController::class,'index']);
 
@@ -66,11 +68,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'isLo
     // 用户模块相关路由 -- 资源路由
     Route::get('user/del', [UserController::class,'delAll']); //\App\Http\Controllers\Admin\UserController@delAll
     Route::resource('user','\App\Http\Controllers\Admin\UserController');
+    // 用户模块给角色
+    Route::get('user/auth/{id}', [UserController::class,'auth']);
+    // 处理授权
+    Route::post('user/doAuth', [UserController::class,'doAuth']);
 
     // 角色模块
     Route::resource('role','\App\Http\Controllers\Admin\RoleController');
     // 角色授权路由
     Route::get('role/auth/{id}', [RoleController::class,'auth']);
+    // 处理授权
+    Route::post('role/doAuth', [RoleController::class,'doAuth']);
+
+    // 权限模块路由
+    Route::resource('permission', '\App\Http\Controllers\Admin\PermissionController');
 
 });
 

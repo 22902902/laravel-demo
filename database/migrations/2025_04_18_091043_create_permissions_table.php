@@ -20,7 +20,7 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->id()->comment('权限ID');
             $table->string('name', 50)->unique()->comment('权限标识');
             $table->string('display_name', 100)->comment('显示名称');

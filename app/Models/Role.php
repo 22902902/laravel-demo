@@ -21,4 +21,10 @@ class Role extends Authenticatable
 
     // 4.是否维护crated_at 和 updated_at字段
     public $timestamps = true;
+
+    // 添加动态属性，关联权限模型
+    public function permission() {
+        // 关联Permission模型，关联表表名，当前模型在关联表中的主键,被关联模型在关联表上的主键
+        return $this->belongsToMany('App\Models\Permission','permission_role','role_id','permission_id');
+    }
 }

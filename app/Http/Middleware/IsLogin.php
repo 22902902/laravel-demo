@@ -5,6 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+/**
+ * 登录中间件
+ * Class IsLogin
+ * @package App\Http\Middleware
+ */
 class IsLogin
 {
     /**
