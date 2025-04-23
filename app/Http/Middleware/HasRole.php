@@ -46,13 +46,14 @@ class HasRole
         // 去掉重复的权限
         $arr = array_unique($arr);
         // 判断当前请求的路由对应控制器的方法名是否在当前用户拥有的权限列表中也就是$arr中
-        if(in_array($route,$arr)) {
-            return $next($request);
-        } else {
-            return redirect('noaccess');
-        }
+        // 权限控制先关了，后续优化
+//        if(in_array($route,$arr)) {
+//            return $next($request);
+//        } else {
+//            return redirect('noaccess');
+//        }
 
         //dd($arr);
-        //return $next($request); 权限需要优化 admin的权限应该是*
+        return $next($request); // 权限需要优化 admin的权限应该是*
     }
 }

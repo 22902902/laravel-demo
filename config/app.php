@@ -233,6 +233,9 @@ return [
         // 验证码
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
+        // 门面别名定义
+        'showWebSite' => \App\Facades\ShowWebSiteImplement::class,
+
     ],
 
 ];

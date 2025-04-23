@@ -21,6 +21,20 @@ Route::get('/', function () {
 });
 
 /**
+ * 门面测试路由
+ */
+Route::get('facades/test', function (){
+    // 实时 Facades
+    Facades\App\Facades\ShowEmail::show();
+
+    // 直接实例
+    \App\Facades\ShowTel::show();
+
+    // 别名
+    \App\Facades\ShowWebSite::show();
+});
+
+/**
 // 用户添加路由
 Route::get('user/add', [UserController::class,'add']);
 // 用户执行添加路由
@@ -82,6 +96,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
 
     // 权限模块路由
     Route::resource('permission', '\App\Http\Controllers\Admin\PermissionController');
+
+
+    // 分类路由
+    Route::resource('cate','\App\Http\Controllers\Admin\CateController');
 
 });
 
