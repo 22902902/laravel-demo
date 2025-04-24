@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cate;
 use Illuminate\Http\Request;
 
 class CateController extends Controller
@@ -24,8 +25,9 @@ class CateController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.cate.add');
+        // 获取一级类
+        $cate = Cate::where('parent_id', null)->get();
+        return view('admin.cate.add',compact('cate'));
     }
 
     /**
@@ -36,7 +38,12 @@ class CateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 1.接收添加的分类数据
+        $input = $request->except('_token');
+
+        // 2.表单验证
+
+        // 3.添加到数据库中
     }
 
     /**

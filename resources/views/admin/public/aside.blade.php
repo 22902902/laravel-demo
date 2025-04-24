@@ -128,7 +128,13 @@
                     <li>
                         <a _href="cate.html">
                             <i class="sub_arrow"></i>
-                            <cite>多级分类</cite>
+                            <cite>分类列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ url('admin/cate/create') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>添加分类</cite>
                         </a>
                     </li>
                 </ul>

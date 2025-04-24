@@ -23,14 +23,16 @@
     <form class="layui-form sy_border">
 
         <div class="layui-form-item">
+            {{ csrf_field() }}
             <label for="L_email" class="layui-form-label">
                 <span class="x-red">*</span>父级分类
             </label>
             <div class="layui-input-inline">
-                <select name="cate_pad" id="">
+                <select name="parent_id" id="">
                     <option value="0">==顶级分类==</option>
-                    <option value="1">aa</option>
-                    <option value="2">bb</option>
+                    @foreach($cate as $item)
+                        <option value="{{ $item->id }}">{{ $item->cate_name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="layui-form-mid layui-word-aux">

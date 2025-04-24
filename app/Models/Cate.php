@@ -14,7 +14,7 @@ class Cate extends Model
     public $table = 'category';
 
     // 2.主键
-    public $primaryKey = 'cate_id';
+    public $primaryKey = 'id';
 
     // 3.允许批量操作的字段
     public $guarded = [];
@@ -27,21 +27,5 @@ class Cate extends Model
         'is_active' => 'boolean'
     ];
 
-    // 生成slug
-    public static function boot()
-    {
-        parent::boot();
 
-        static::creating(function ($category) {
-            // 确保slug不为空且唯一
-            $category->slug = $category->slug ?: \Str::slug($category->cate_name);
-            $category->slug = \Str::slug($category->cate_name); // 强制重新生成
-        });
-
-        static::updating(function ($category) {
-            if ($category->isDirty('cate_name')) {
-                $category->slug = \Str::slug($category->cate_name);
-            }
-        });
-    }
 }
