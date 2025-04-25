@@ -26,7 +26,8 @@ class CateController extends Controller
     public function create()
     {
         // 获取一级类
-        $cate = Cate::where('parent_id', null)->get();
+        //$cate = Cate::where('parent_id', null)->get();
+        $cate = Cate::whereIsRoot()->get(); // kalnoy/nestedset 用法
         return view('admin.cate.add',compact('cate'));
     }
 
@@ -44,6 +45,14 @@ class CateController extends Controller
         // 2.表单验证
 
         // 3.添加到数据库中
+        $res = Cate::create($input);
+
+        // 4.判断是否添加成功
+        if($res) {
+            return redirect('admin/cate');
+        } else {
+            return back();
+        }
     }
 
     /**
