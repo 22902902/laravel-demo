@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Cate;
 use Illuminate\Http\Request;
 
+use Intervention\Image\ImageManagerStatic as Image;
+
 class ArticleController extends Controller
 {
 
@@ -33,21 +35,29 @@ class ArticleController extends Controller
         // 文件上传的指定路径
         $path = public_path('uploads');
 
-        // 将文件从临时目录移动到指定目录
-        if(!$file->move($path, $newFile)) {
+        // 将文件从临时目录移动到指定目录,使用Image组件
+//        if(!$file->move($path, $newFile)) {
+//            return response()->json([
+//                'ServerNo' => '401',
+//                'ResultData' => '保存文件失败'
+//            ]);
+//        }
+
+        // 打开->水印->保存
+        $res = Image::make($file)->resize(100,100)->save($path . '/' . $newFile);
+
+        if($res) {
+            // 如果上传成功
+            return response()->json([
+                'ServerNo' => '200',
+                'ResultData' => $newFile
+            ]);
+        } else {
             return response()->json([
                 'ServerNo' => '401',
-                'ResultData' => '保存文件失败'
+                'ResultData' => '上传文件失败'
             ]);
         }
-        // 如果上传成功
-        return response()->json([
-            'ServerNo' => '200',
-            'ResultData' => $newFile
-        ]);
-
-
-
     }
 
     /**

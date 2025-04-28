@@ -177,6 +177,8 @@ return [
 
         // 验证码
         Mews\Captcha\CaptchaServiceProvider::class,
+        // 图片处理组件
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -235,6 +237,9 @@ return [
 
         // 门面别名定义
         'showWebSite' => \App\Facades\ShowWebSiteImplement::class,
+
+        // 图片处理
+        'Image'=> Intervention\Image\Facades\Image::class,
 
     ],
 
