@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CateController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
@@ -100,6 +101,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
 
     // 分类路由
     Route::resource('cate','\App\Http\Controllers\Admin\CateController');
+    // 修改排序ajax
+    Route::post('cate/changeorder',[CateController::class,'changeOrder']);
 
 });
 

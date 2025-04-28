@@ -126,7 +126,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="cate.html">
+                        <a _href="{{ url('admin/cate') }}">
                             <i class="sub_arrow"></i>
                             <cite>分类列表</cite>
                         </a>

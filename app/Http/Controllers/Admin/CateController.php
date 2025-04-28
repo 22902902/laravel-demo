@@ -15,7 +15,46 @@ class CateController extends Controller
      */
     public function index()
     {
-        //
+        // 获取分类数据
+        //$cate = Cate::get();
+        // 调用模型的tree方法
+        //$categories = (new Cate())->tree(); // 有bug
+
+        // 获取所有顶级分类并预加载子分类关系
+        // with('children') 使用递归预加载减少查询次数
+//        $categories = Cate::with('children')
+//            ->whereIsRoot()
+//            ->orderBy('_lft')
+//            ->get();
+//
+//        // 用于分类表单中的父级选择（排除自身）
+//        $parentOptions = Cate::get()->toFlatTree();
+
+        // 获取所有分类（按嵌套顺序排列）
+        $categories = Cate::withDepth()
+            //->orderBy('_lft')
+            ->orderBy('order','asc')
+            ->get();
+
+        // 返回分类页面
+        //return view('admin.cate.list',compact('categories', 'parentOptions'));
+        return view('admin.cate.list',compact('categories'));
+    }
+
+    /**
+     * 修改排序
+     */
+    public function changeOrder(Request $request) {
+        // 1.获取传过来的参数
+        $input = $request->except('_token');
+
+
+        // 2.通过分类ID获取当前分类
+        $cate = Cate::find($input['id']);
+
+        // 3.修改当前分类的排序值
+        $res = $cate->update(['order'=>$input['order']]);
+        return msg($res, "修改");
     }
 
     /**
@@ -99,4 +138,5 @@ class CateController extends Controller
     {
         //
     }
+
 }

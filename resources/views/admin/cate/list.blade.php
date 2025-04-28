@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>用户列表页</title>
+    <title>分类列表页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -33,25 +33,13 @@
 <div class="x-body">
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" method="get" action="{{ url('admin/user') }}">
-            <div class="layui-input-inline">
-                <select name="num" lay-filter="aihao">
-{{--                    <option value=""></option>--}}
-                    <option value="3" @if($request->input('num') == 3) selected @endif>3</option>
-                    <option value="5" @if($request->input('num') == 5) selected @endif>5</option>
-                    <option value="10" @if($request->input('num') == 10) selected @endif>10</option>
-                </select>
-            </div>
-{{--            <input class="layui-input date" placeholder="开始日" name="start" id="start">--}}
-{{--            <input class="layui-input date" placeholder="截止日" name="end" id="end">--}}
-            <input type="text" name="username" value="{{ $request->input('username') }}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-            <input type="text" name="email" placeholder="请输入邮箱" value="{{ $request->input('email') }}" autocomplete="off" class="layui-input">
-            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+
         </form>
     </div>
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','{{ url('admin/user/create') }}',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+
     </xblock>
     <table class="layui-table" lay-even lay-skin="line">
         <thead>
@@ -60,41 +48,36 @@
                 <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>用户名</th>
-            <th>昵称</th>
-            <th>邮箱</th>
-            <th>加入时间</th>
-            <th>状态</th>
+            <th>分类名称</th>
+            <th>分类标题</th>
+            <th>创建时间</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($user as $item)
+        @foreach($categories as $item)
+            <!-- 根据深度生成层级符号 -->
+            @php $prefix = str_repeat('|-- ', $item->depth) @endphp
         <tr>
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{ $item->id }}'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-input-inline" style="width: 35px;">
+                    <input onchange="changeOrder(this, {{ $item->id }})" type="text" name="order" class="layui-input" value="{{ $item->order }}">
+                </div>
+{{--                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{ $item->id }}'>--}}
+{{--                    <i class="layui-icon">&#xe605;</i>--}}
+{{--                </div>--}}
             </td>
             <td>{{ $item->id }}</td>
-            <td>{{ $item->username }}</td>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->email }}</td>
+            <td>{!! $prefix !!} {{ $item->cate_name }}</td>
+            <td>{{ $item->cate_title }}</td>
             <td>{{ $item->created_at }}</td>
-            <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
 
             <td class="td-manage">
-{{--                <a class="layui-btn s_color1" onclick="member_stop(this,'10001')" href="javascript:;" title="启用">--}}
-{{--                    <i class="layui-icon">&#xe601;</i>--}}
-{{--                </a>--}}
-                <a class="layui-btn s_color3" title="授权" href="{{ url('admin/user/auth/' . $item->id) }}">
-                    <i class="layui-icon">&#xe631;</i>
-                </a>
-                <a class="layui-btn s_color2" title="编辑" onclick="x_admin_show('编辑','{{ url('admin/user/'. $item->id .'/edit') }}',600,400)" href="javascript:;">
+
+                <a class="layui-btn s_color2" title="编辑" onclick="x_admin_show('编辑','{{ url('admin/cate/'. $item->id .'/edit') }}',600,400)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-{{--                <a class="layui-btn s_color3" onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">--}}
-{{--                    <i class="layui-icon">&#xe631;</i>--}}
-{{--                </a>--}}
+
                 <a class="layui-btn s_color4" title="删除" onclick="member_del(this,{{ $item->id }})" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
@@ -103,17 +86,6 @@
         @endforeach
         </tbody>
     </table>
-    <div class="page">
-        <div>{!! $user->appends($request->all())->links('pagination::bootstrap-4') !!} <!-- 分页render 推荐links ,样式：'pagination::tailwind' 'pagination::bootstrap-4'--></div>
-{{--        <div>--}}
-{{--            <a class="prev" href="">&lt;&lt;</a>--}}
-{{--            <a class="num" href="">1</a>--}}
-{{--            <span class="current">2</span>--}}
-{{--            <a class="num" href="">3</a>--}}
-{{--            <a class="num" href="">489</a>--}}
-{{--            <a class="next" href="">&gt;&gt;</a>--}}
-{{--        </div>--}}
-    </div>
 
 </div>
 <script>
@@ -130,6 +102,28 @@
             elem: '#end' //指定元素
         });
     });
+
+
+    function changeOrder(obj, id) {
+
+        // 获取当前文本框的值（修改后的排序值）
+        var order_id = $(obj).val();
+        // 发动ajax改排序参数
+        $.post(
+            '/admin/cate/changeorder',
+            {
+                _token:"{{ csrf_token() }}",
+                "id":id,
+                "order":order_id},function(data){
+                if(data.status == 0) {
+                    layer.msg(data.message,{icon:6,time: 1000},function () {
+                        location.reload(); // 刷新页面
+                    })
+                } else {
+                    layer.msg(data.message,{icon:5,time: 1000});
+                }
+            })
+    }
 
     /*用户-停用*/
     function member_stop(obj, id) {

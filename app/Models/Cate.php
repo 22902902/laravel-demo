@@ -27,5 +27,37 @@ class Cate extends Model
         'is_active' => 'boolean'
     ];
 
+    // 格式化分类数据
+    public function tree() {
+        // 获取所有的分类数据
+        $cates = $this->orderBy('order','asc')->get();
+
+        // 格式化（排序、二级分类缩进）
+        return $this->getTree($cates);
+    }
+
+    public function getTree($category) {// 还得优化
+        // 存放最终排完序的分类数据
+        $arr = [];
+        // 排序，先获取一级类
+        foreach($category as $k => $v) {
+            // 一级类
+            // dump('111'); 6次
+            if(empty($v->parent_id) || $v->parent_id == 0) {
+                $arr[] = $v;
+                // 获取一级类下的二级类
+                foreach ($category as $m => $n) {
+                    if($v->id == $n->parent_id) {
+                        // 给分类名称添加缩进
+                        $n->cate_name = '|----' . $n->cate_name;
+                        $arr[] = $n;
+                    }
+                }
+            }
+
+        }
+
+        return $arr;
+    }
 
 }
