@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CateController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\RoleController;
@@ -103,6 +104,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
     Route::resource('cate','\App\Http\Controllers\Admin\CateController');
     // 修改排序ajax
     Route::post('cate/changeorder',[CateController::class,'changeOrder']);
+
+    // 文章
+    Route::resource('article','\App\Http\Controllers\Admin\ArticleController');
+    // 上传路由
+    Route::post('article/upload', [ArticleController::class,'upload']);
 
 });
 

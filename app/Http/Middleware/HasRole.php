@@ -26,10 +26,21 @@ class HasRole
     {
         // 1.获取当前请求的路由，对应的控制器的方法名
         $route = \Route::current()->getActionName();
-        //dd($route);
+        //dd($route); // "App\Http\Controllers\Admin\LoginController@index"
+
+        if(!session()->get('user')) {
+            //session是空的，返回登录
+            return redirect('admin/login')->withErrors([
+                'username' => '登录失效，请登录'
+            ]);
+        }
+        //dd();
         // 2.获取当前用户的权限组
         // 用户 找到 角色， 从角色 找到 权限
         $user = User::find(session()->get('user')->id);
+        if (!$user) {
+            return redirect('noaccess');
+        }
         //dd($user);
         // 获取当前用户的角色
         $roles = $user->role;
