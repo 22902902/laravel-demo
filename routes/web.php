@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CateController;
+use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
@@ -111,6 +112,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
     Route::post('article/upload', [ArticleController::class,'upload']);
     // 将markdown语法转化为html语法的内容
     Route::post('article/per_mk', [ArticleController::class,'per_mk']);
+
+
+    // 网站配置模块路由
+    Route::resource('config','\App\Http\Controllers\Admin\ConfigController');
+    Route::post('config/changecontent', [ConfigController::class,'changecontent']);
+    Route::get('config/putcontent', [ConfigController::class,'putcontent']);
 
 });
 
