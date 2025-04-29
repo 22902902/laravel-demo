@@ -178,7 +178,9 @@ return [
         // 验证码
         Mews\Captcha\CaptchaServiceProvider::class,
         // 图片处理组件
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        // markdown
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
     ],
 
@@ -240,6 +242,9 @@ return [
 
         // 图片处理
         'Image'=> Intervention\Image\Facades\Image::class,
+
+        // markdown
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
 
     ],
 

@@ -104,12 +104,27 @@
             </div>
         </div>
 
+        <div class="layui-form-item"></div>
+
         <div class="layui-form-item">
             <label for="L_art_tag" class="layui-form-label">
                 <span class="x-red">*</span>Markdown
             </label>
             <div class="layui-input-block">
-                
+                <div class="layui-tab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">输入MarkDown语法内容</li>
+                        <li id="previewBtn">预览Html语法内容</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <textarea id="z-textarea" name="desc" placeholder="请输入内容" class="layui-textarea" ></textarea>
+                        </div>
+                        <div class="layui-tab-item">
+                            <textarea id="z-textarea-preview" name="desc" placeholder="请输入内容" class="layui-textarea" ></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -142,10 +157,43 @@
     // 实例化编辑器
     var ue = UE.getEditor('container');
 
-    layui.use(['form','layer'], function(){
+    // 带token
+    {{--$.ajaxSetup({--}}
+    {{--    header : {--}}
+    {{--        //'X-CSRF-TOKEN': '{{ csrf_token() }}'--}}
+    {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+    {{--    }--}}
+    {{--});--}}
+
+    // markdown ajax
+    $('#previewBtn').click(function() {
+        $.ajax({
+            url: "/admin/article/per_mk",
+            type: "post",
+            headers: { // 请求头 token
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                cont: $('#z-textarea').val()
+            },
+            success:function (res) {
+                $('#z-textarea-preview').html(res);
+            },
+            error:function (err) {
+                console.log(err.responseText);
+            }
+        });
+    })
+
+
+
+
+    layui.use(['form','layer','upload','element'], function(){
         $ = layui.jquery;
         var form = layui.form
             ,layer = layui.layer;
+        var upload = layui.upload;
+        var element = layui.element;
 
         $('#test1').on('click', function () {
             $('#photo_upload').trigger('click');

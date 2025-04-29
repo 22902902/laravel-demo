@@ -7,9 +7,18 @@ use App\Models\Cate;
 use Illuminate\Http\Request;
 
 use Intervention\Image\ImageManagerStatic as Image;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class ArticleController extends Controller
 {
+
+    /**
+     * 将markdown语法转化为html语法的内容
+     */
+    public function per_mk(Request $request) {
+        return Markdown::convertToHtml($request->cont);
+        //return Markdown::convert($request->cont)->getContent();
+    }
 
     /**
      * 文件上传

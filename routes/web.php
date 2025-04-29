@@ -109,6 +109,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
     Route::resource('article','\App\Http\Controllers\Admin\ArticleController');
     // 上传路由
     Route::post('article/upload', [ArticleController::class,'upload']);
+    // 将markdown语法转化为html语法的内容
+    Route::post('article/per_mk', [ArticleController::class,'per_mk']);
 
 });
 
