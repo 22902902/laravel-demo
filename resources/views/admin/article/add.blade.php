@@ -106,8 +106,24 @@
 
         <div class="layui-form-item">
             <label for="L_art_tag" class="layui-form-label">
+                <span class="x-red">*</span>Markdown
+            </label>
+            <div class="layui-input-block">
+                
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="L_art_tag" class="layui-form-label">
                 <span class="x-red">*</span>内容
             </label>
+
+            <div class="layui-input-block">
+                <!-- 加载编辑器的容器 -->
+                <script id="container" style="height: 300px;" name="content" type="text/plain">
+
+                </script>
+            </div>
         </div>
 
 
@@ -116,7 +132,16 @@
         </div>
     </form>
 </div>
+
+<!-- 配置文件 -->
+<script type="text/javascript" src="{{ asset('./ueditor/ueditor.config.js') }}"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{{ asset('./ueditor/ueditor.all.js') }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ asset('./ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 <script>
+    // 实例化编辑器
+    var ue = UE.getEditor('container');
+
     layui.use(['form','layer'], function(){
         $ = layui.jquery;
         var form = layui.form
