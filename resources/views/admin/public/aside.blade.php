@@ -162,6 +162,28 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>网站配置管理</cite>
+                    <i class="iconfont nav_right">&#xe6a7;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{ url('admin/config') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>网站配置列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ url('admin/config/create') }}">
+                            <i class="sub_arrow"></i>
+                            <cite>添加网站配置</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
 
             <li>
                 <a href="javascript:;">

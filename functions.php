@@ -19,3 +19,17 @@ function msg($res, $msg) {
     }
     return $data;
 }
+
+
+/**
+ * 提示跳转
+ * @param $res 条件
+ * @param $url 跳转地址
+ */
+function resUrl($res, $url) {
+    if($res) {
+        return redirect($url);
+    } else {
+        return back();
+    }
+}

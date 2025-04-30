@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use Illuminate\Http\Request;
 
 class ConfigController extends Controller
@@ -14,7 +15,11 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        //
+        // 获取所有网站配置项
+        $conf = Config::get();
+
+        return view('admin.config.list', compact('conf'));
+
     }
 
     /**
@@ -24,7 +29,8 @@ class ConfigController extends Controller
      */
     public function create()
     {
-        //
+        // 返回添加页面
+        return view('admin.config.add');
     }
 
     /**
@@ -35,7 +41,13 @@ class ConfigController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 接收传过来的参数
+        $input = $request->except('_token');
+
+        $res = Config::create($input);
+
+        // 提示跳转
+        resUrl($res, 'admin/config');
     }
 
     /**
