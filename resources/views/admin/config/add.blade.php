@@ -64,7 +64,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="L_art_tag" name="conf_order" required=""
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" value="0">
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                 <span class="x-red">*</span>内容
             </label>
             <div class="layui-input-block">
-                <textarea name="conf_tips" placeholder="请输入内容" class="layui-textarea" id="" cols="30" rows="10"></textarea>
+                <textarea name="content" placeholder="请输入内容" class="layui-textarea" id="" cols="30" rows="10"></textarea>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
 
             <div class="layui-input-block">
                 <!-- 加载编辑器的容器 -->
-                <script id="container" style="height: 300px;" name="content" type="text/plain">
+                <script id="container" style="height: 300px;" name="conf_tips" type="text/plain">
 
                 </script>
             </div>

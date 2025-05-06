@@ -39,7 +39,8 @@
         <button class="layui-btn" onclick="x_admin_show('添加用户','{{ url('admin/config/create') }}',600,400)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px"></span>
     </xblock>
-    <table class="layui-table" lay-even lay-skin="line">
+    <form action="{{ url('admin/config/changecontent') }}" method="post">
+        <table class="layui-table" lay-even lay-skin="line">
         <thead>
         <tr>
             <th>
@@ -55,13 +56,11 @@
         <tbody>
         @foreach($conf as $item)
         <tr>
-            <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{ $item->conf_id }}'><i class="layui-icon">&#xe605;</i></div>
-            </td>
+            <input type="hidden" name="conf_id[]" value="{{ $item->conf_id }}">
             <td>{{ $item->conf_id }}</td>
             <td>{{ $item->conf_title }}</td>
             <td>{{ $item->conf_name }}</td>
-            <td>{!! $item->conf_tips !!}</td>
+            <td>{!! $item->conf_contents !!}</td>
 
             <td class="td-manage">
                 <a class="layui-btn s_color4" title="删除" onclick="member_del(this,{{ $item->conf_id }})" href="javascript:;">
@@ -70,9 +69,15 @@
             </td>
         </tr>
         @endforeach
+        <tr>
+            <td colspan="6">
+                {{ csrf_field() }}
+                <button class="layui-btn" lay-filter="add" lay-submit="">批量修改</button>
+            </td>
+        </tr>
         </tbody>
     </table>
-
+    </form>
 
 </div>
 <script>
