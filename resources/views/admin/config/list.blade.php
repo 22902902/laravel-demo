@@ -25,7 +25,7 @@
         <a href="">首页</a>
         <a href="">演示</a>
         <a>
-          <cite>导航元素</cite></a>
+          <cite>{{ config('webconfig.web_title') }}</cite></a> <!-- config/webconfing.php -->
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.3;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:25px">ဂ</i></a>

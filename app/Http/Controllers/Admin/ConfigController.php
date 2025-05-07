@@ -9,6 +9,24 @@ use Illuminate\Support\Facades\DB;
 
 class ConfigController extends Controller
 {
+
+    /**
+     * 将网站配置数据表中的网站配置数据写入config/webconfig文件中
+     */
+    public function putContent() {
+        //dd('aaa');
+        // 1.从网站配置表中获取网站的配置数据
+        $content = Config::pluck('content', 'conf_name')->all(); // 取2列的全部数据
+
+        //dd($content);
+        // 2.准备要写入的内容
+        $str = '<?php return ' . var_export($content, true) . ';';
+
+        // 3.将内容写入webconfig.php文件
+        file_put_contents(config_path() . '/webconfig.php', $str); // 创建文件
+
+    }
+
     /**
      * 批量修改网站配置项
      * changecontent
@@ -32,6 +50,10 @@ class ConfigController extends Controller
 
             // 执行成功,提交
             DB::commit();
+
+            // 更新webconfig
+            $this->putContent();
+
             return redirect('/admin/config');
         }catch (\Exception $exception) {
             // 捕获异常, 回滚
@@ -123,8 +145,17 @@ class ConfigController extends Controller
 
         $res = Config::create($input);
 
-        // 提示跳转
-        resUrl($res, 'admin/config');
+        if($res) {
+            // 更新webconfig
+            $this->putContent();
+
+            // 提示跳转
+            return redirect('admin/config');
+        } else {
+            return back();
+        }
+
+
     }
 
     /**

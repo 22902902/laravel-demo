@@ -115,9 +115,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['has
 
 
     // 网站配置模块路由
+    Route::get('config/putcontent', [ConfigController::class,'putContent']);
     Route::resource('config','\App\Http\Controllers\Admin\ConfigController');
     Route::post('config/changecontent', [ConfigController::class,'changecontent']);
-    Route::get('config/putcontent', [ConfigController::class,'putcontent']);
+
 
 });
 

@@ -193,7 +193,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="city.html">
+                        <a _href="{{ url('admin/config/putcontent') }}">
                             <i class="sub_arrow"></i>
                             <cite>三级地区联动</cite>
                         </a>
