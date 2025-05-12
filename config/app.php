@@ -181,6 +181,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         // markdown
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+        // Dingo
+        Dingo\Api\Provider\LaravelServiceProvider::class,
 
     ],
 
