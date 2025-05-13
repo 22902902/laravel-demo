@@ -183,6 +183,8 @@ return [
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         // Dingo
         Dingo\Api\Provider\LaravelServiceProvider::class,
+        // Excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -247,6 +249,9 @@ return [
 
         // markdown
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+
+        // excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
