@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 
-class TestController extends Controller
+class TestController extends BaseControllers
 {
     // 测试 http://localhost:8013/api/test
-    public function index() {
+    public function index(Request $request) {
         //return response()->json(['status' => 'success']);
 
         // dingo 响应
@@ -23,8 +24,54 @@ class TestController extends Controller
         // 使用响应生成器响应一个数组
         // return $this->response->array(['username' => 'admin','password' =>'123456']);
 
+        // 异常
+
         // 无内容响应
-        return $this->response->noContent();
+        //return $this->response->noContent();
+
+        // 一个自定义消息和状态码的普通错误
+        //return $this->response->error('This is an error.' , 404);
+
+        // 自定义响应 Symfony\Component 前面加\代表从根命名空间找
+        //throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('请求错误.');
+
+        // 资源异常
+        // 定义规则
+//        $rules = [
+//            'username' => ['required', 'alpha'],
+//            'password' => ['required', 'min:7']
+//        ];
+//
+//        // 拿到参数
+//        $payload = app('request')->only('username', 'password');
+//
+//        // 验证参数,规则
+//        $validator = app('validator')->make($payload, $rules);
+//
+//        // 抛出异常并返回错误信息
+//        throw new \Dingo\Api\Exception\StoreResourceFailedException('Could not create new user.', $validator->errors());
+
+        // 表单验证异常
+//        $validatedData = $request->validate([
+//            'title' => 'required|unique:posts|max:255',
+//            'body' => 'required',
+//        ]);
+
+
+        // 响应生成器使用Transformer
+        //$user = User::find(1);
+        //return $user; // 直接返回
+        // return $this->response->item($user, new UserTransformer()); 响应一条数据
+
+//        $user = User::all();
+//        return $this->response->collection($user, new UserTransformer()); // 响应一个数组
+
+        // 响应一个分页
+
+
+
+
+
     }
 
     // http://localhost:8013/api/name
