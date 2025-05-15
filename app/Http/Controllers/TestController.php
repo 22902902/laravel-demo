@@ -67,6 +67,12 @@ class TestController extends BaseControllers
 //        return $this->response->collection($user, new UserTransformer()); // 响应一个数组
 
         // 响应一个分页
+        $users = User::paginate(4);
+
+        return $this->response->paginator($users, new UserTransformer)
+            ->withHeader('X-Foo', 'Bar') // 添加额外的头信息
+            ->addMeta('foo', 'bar'); // 添加 Meta 信息
+
 
 
 
