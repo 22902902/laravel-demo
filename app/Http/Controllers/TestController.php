@@ -85,4 +85,10 @@ class TestController extends BaseControllers
         $url = app('Dingo\Api\Routing\UrlGenerator')->version('v1')->route('test.name');
         dd($url);
     }
+
+
+    public function users() {
+        $users = User::all();
+        return $this->response->collection($users, new UserTransformer)
+    }
 }

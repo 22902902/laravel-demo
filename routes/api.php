@@ -9,6 +9,11 @@ $api->version('v1', function ($api) {
 
     // 命名路由
     $api->get('name', ['as' => 'test.name', 'uses' => '\App\Http\Controllers\TestController@name']);
+
+    // 需要登录的路由
+    $api->group(['middleware' => 'api.auth'], function($api) {
+        $api->get('users', [\App\Http\Controllers\TestController::class, 'users']);
+    });
 });
 
 

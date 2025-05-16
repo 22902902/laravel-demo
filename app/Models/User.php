@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
     // 1.用户模型关联表
     public $table = 'users';
 
-    // 2.关联表的主键
     public $primaryKey = 'id';
 
 
@@ -69,4 +69,30 @@ class User extends Authenticatable
         // 关联Permission模型，关联表表名，当前模型在关联表中的主键,被关联模型在关联表上的主键
         return $this->belongsToMany('App\Models\Role','user_role','user_id','role_id');
     }
+
+
+
+    // Rest omitted for brevity  --- JWTSubject方法
+    // 2.关联表的主键
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 }

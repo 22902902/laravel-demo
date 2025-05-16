@@ -185,6 +185,8 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         // Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        // jwt-auth
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
