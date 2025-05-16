@@ -89,6 +89,6 @@ class TestController extends BaseControllers
 
     public function users() {
         $users = User::all();
-        return $this->response->collection($users, new UserTransformer)
+        return $this->response->collection($users, new UserTransformer);
     }
 }
