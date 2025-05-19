@@ -142,4 +142,26 @@ class TestController extends BaseControllers
         ]);
     }
 
+
+    public function in() {
+        // 内部调用
+        // 分发器
+        $dispatcher = app('Dingo\Api\Dispatcher');
+
+        // 普通请求
+//        $users = $dispatcher->get('api/test');
+//        return $users;
+
+        // 模拟用户
+        $user = User::find(1);
+        $users = $dispatcher->be($user)->get('api/users');
+        return $users;
+    }
+
+    public function in2() {
+        // 模拟用户
+        $user = User::find(2);
+        return $user;
+    }
+
 }
