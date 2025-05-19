@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends BaseControllers
 {
@@ -88,7 +89,57 @@ class TestController extends BaseControllers
 
 
     public function users() {
-        $users = User::all();
-        return $this->response->collection($users, new UserTransformer);
+        // 所有用户
+//        $users = User::all();
+//        return $this->response->collection($users, new UserTransformer);
+
+        // 从token获取用户信息
+//        $user = app('Dingo\Api\Auth\Auth')->user();
+//        return $user;
+
+//        $user = auth('api')->user();
+//        return $user;
+
+        // 门面
+//        $user = Auth::guard('api')->user();
+//        return $user;
+
+        $user = $this->auth->user();
+        return $user;
     }
+
+    public function login(Request $request) {
+//        $email = $request->input('email');
+//        $password = $request->input('password');
+
+        $credentials = request(['username', 'password']);
+
+        if (!$token = auth('api')->attempt($credentials)) {
+            // return response()->json(['error' => 'Unauthorized'], 401);
+            // dingo api
+            return $this->response->errorUnauthorized();
+        }
+
+        return $this->respondWithToken($token);
+
+    }
+
+    /**
+     * 格式化返回
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        // 也可以 return response()->json([
+        return $this->response->array([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
+    }
+
 }

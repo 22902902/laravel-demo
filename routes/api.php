@@ -10,10 +10,17 @@ $api->version('v1', function ($api) {
     // 命名路由
     $api->get('name', ['as' => 'test.name', 'uses' => '\App\Http\Controllers\TestController@name']);
 
+    // 执行登录
+    $api->post('login', [\App\Http\Controllers\TestController::class, 'login']);
+
     // 需要登录的路由
-    $api->group(['middleware' => 'api.auth'], function($api) {
+//    $api->group(['middleware' => 'api.auth'], function($api) {
+//        $api->get('users', [\App\Http\Controllers\TestController::class, 'users']);
+//    });
+    $api->group(['middleware' => 'api.auth'], function ($api) {
         $api->get('users', [\App\Http\Controllers\TestController::class, 'users']);
     });
+
 });
 
 
