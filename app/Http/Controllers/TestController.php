@@ -87,7 +87,19 @@ class TestController extends BaseControllers
         dd($url);
     }
 
-
+    /**
+     * 注册用户
+     *
+     * 使用 `username` 和 `password` 注册用户。
+     *
+     * @Post("/api/in")
+     * @Versions({"v1"})
+     * @Transaction({
+     *      @Request({"username": "foo", "password": "bar"}),
+     *      @Response(200, body={"id": 10, "username": "foo"}),
+     *      @Response(422, body={"error": {"username": {"Username is already taken."}}})
+     * })
+     */
     public function users() {
         // 所有用户
 //        $users = User::all();
@@ -124,14 +136,7 @@ class TestController extends BaseControllers
 
     }
 
-    /**
-     * 格式化返回
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     protected function respondWithToken($token)
     {
         // 也可以 return response()->json([
