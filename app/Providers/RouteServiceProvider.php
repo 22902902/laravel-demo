@@ -38,10 +38,25 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+
+            // 注册用户认证相关路由
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/auth.php'));
+
+            // 注册前台路由
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
+
+            // 注册后台路由
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/admin.php'));
+
 
             Route::middleware('web')
                 ->namespace($this->namespace)

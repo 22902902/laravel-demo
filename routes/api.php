@@ -1,5 +1,7 @@
 <?php
 
+// 前台API
+
 // 获得API实例
 $api = app('Dingo\Api\Routing\Router');
 
