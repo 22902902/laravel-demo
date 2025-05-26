@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "kalnoy/nestedset": "^6.0",
+        "laravel-lang/lang": "^12.17",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "3.1.40",

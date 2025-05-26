@@ -7,9 +7,24 @@ $api = app('Dingo\Api\Routing\Router');
 // 定义版本组 1分钟请求3次
 $api->version('v1' , ['middleware' => 'api.throttle', 'limit' => 60, 'expires' => 1] , function ($api) {
 
-    $api->group(['middleware' => 'api.auth'], function ($api) {
+    // 路由组
+    $api->group(['prefix' => 'auth'], function ($api) {
 
+        // 测试一个路由: http://localhost:8013/api/auth/register
+//        $api->post('register', function () {
+//            return [1];
+//        });
+
+        // 用户注册
+        $api->post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'store']);
+
+        // 需要登录的路由
+        $api->group(['middleware' => 'api.auth'], function ($api) {
+
+        });
     });
+
+
 
 });
 
