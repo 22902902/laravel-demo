@@ -18,9 +18,12 @@ $api->version('v1' , ['middleware' => 'api.throttle', 'limit' => 60, 'expires' =
         // 用户注册
         $api->post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'store']);
 
-        // 需要登录的路由
-        $api->group(['middleware' => 'api.auth'], function ($api) {
+        // 登录
+        $api->post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
 
+        // 需要登录的路由
+        $api->group(['middleware' => 'jwt.auth'], function ($api) {
+            $api->get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
         });
     });
 
