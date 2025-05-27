@@ -23,7 +23,10 @@ $api->version('v1' , ['middleware' => 'api.throttle', 'limit' => 60, 'expires' =
 
         // 需要登录的路由
         $api->group(['middleware' => 'jwt.auth'], function ($api) {
-            $api->get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
+            // 退出登录
+            $api->post('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
+            // 刷新token
+            $api->post('refresh', [\App\Http\Controllers\Auth\LoginController::class, 'refresh']);
         });
     });
 

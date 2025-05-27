@@ -56,6 +56,7 @@ class LoginController extends BaseControllers
     }
 
     /**
+     * 刷新token
      * Refresh a token.
      *
      * @return \Illuminate\Http\JsonResponse
