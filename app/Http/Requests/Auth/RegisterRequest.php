@@ -31,4 +31,16 @@ class RegisterRequest extends BaseRequest
             'password' => 'required|min:6|max:16|confirmed', // 必填、最少6个字符、最多不能超过16个字符、确认密码验证
         ];
     }
+
+    /**
+     * 自定义验证消息
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => '昵称不能为空',
+            'name.max' => '昵称不能超过16个字符'
+        ];
+    }
 }

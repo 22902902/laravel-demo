@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'zh_CN', // 语言包：composer require laravel-lang/lang
+    'locale' => 'zh_CN', // 语言包：composer require laravel-lang/lang:~8.0
 
     /*
     |--------------------------------------------------------------------------
