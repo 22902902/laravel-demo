@@ -6,10 +6,31 @@
 $api = app('Dingo\Api\Routing\Router');
 
 // 定义版本组 1分钟请求3次
-$api->version('v1' , ['middleware' => 'api.throttle', 'limit' => 60, 'expires' => 1] , function ($api) {
+$params = [
+    'middleware' => [
+        'api.throttle',
+        'serializer:array', // 减少transformer包裹层
+        'bindings'// 支持路由模型注入
+    ],
+    'limit' => 60,
+    'expires' => 1
+];
 
-    $api->group(['middleware' => 'api.auth'], function ($api) {
+$api->version('v1' , $params , function ($api) {
 
+    $api->group(['prefix' => 'adminapi'], function ($api) {
+        // 需要登录的路由
+        $api->group(['middleware' => 'api.auth'], function ($api) {
+            /**
+             * 用户管理
+             */
+            // 禁用用户 、 启用用户
+            $api->patch('users/{user}/lock', [\App\Http\Controllers\AdminApi\UserController::class, 'lock']);
+            // 用户管理资源路由
+            $api->resource('users',\App\Http\Controllers\AdminApi\UserController::class,[
+                'only' => ['index','show'],
+            ]);
+        });
     });
 
 });

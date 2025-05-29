@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class, // 处理路由绑定
         ],
 
         'api' => [
@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'isLogin' => \App\Http\Middleware\IsLogin::class,
         'hasRole' => \App\Http\Middleware\HasRole::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class, // 处理路由绑定
     ];
 }
