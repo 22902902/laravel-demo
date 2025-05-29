@@ -74,9 +74,11 @@ class UserController extends BaseControllers
     /**
      * 禁用和启用
      */
-    public function lock()
+    public function lock(User $user)
     {
-
+        $user->status = $user->status == 0 ? 1 : 0;
+        $user->save();
+        return $this->response->noContent();
     }
 
     /**

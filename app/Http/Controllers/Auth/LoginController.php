@@ -26,10 +26,17 @@ class LoginController extends BaseControllers
      */
     public function login(LoginRequest $request)
     {
+
         $credentials = request(['username', 'password']);
 
         if (!$token = auth('api')->attempt($credentials)) {
             return $this->response->errorUnauthorized();
+        }
+
+        // 检查用户状态 0禁用 1启用
+        $user = auth('api')->user();
+        if($user->status == 0) {
+            return $this->response->errorForbidden('被锁定');
         }
 
         return $this->respondWithToken($token);
