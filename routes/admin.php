@@ -30,6 +30,14 @@ $api->version('v1' , $params , function ($api) {
             $api->resource('users',\App\Http\Controllers\AdminApi\UserController::class,[
                 'only' => ['index','show'],
             ]);
+
+            /**
+             * 分类管理
+             */
+            // 分类管理资源路由
+            $api->resource('category',\App\Http\Controllers\AdminApi\CategoryController::class,[
+                'except' => ['destroy'],
+            ]);
         });
     });
 

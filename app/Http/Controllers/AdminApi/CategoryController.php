@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 /**
  *
+ * 分类
  * php artisan make:controller AdminApi/CategoryController --api
  *
  * Class CategoryController
@@ -28,14 +29,14 @@ class CategoryController extends BaseControllers
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 添加分类
      */
     public function store(Request $request)
     {
-        //
+        // 表单验证
+        $request->validate([
+            'name' => 'required|max:16'
+        ]);
     }
 
     /**
