@@ -28,7 +28,7 @@ $api->version('v1' , $params , function ($api) {
             $api->patch('users/{user}/lock', [\App\Http\Controllers\AdminApi\UserController::class, 'lock']);
             // 用户管理资源路由
             $api->resource('users',\App\Http\Controllers\AdminApi\UserController::class,[
-                'only' => ['index','show'],
+                'only' => ['index','show'], // 启用的资源，只能用index和show
             ]);
 
             /**
@@ -36,7 +36,7 @@ $api->version('v1' , $params , function ($api) {
              */
             // 分类管理资源路由
             $api->resource('category',\App\Http\Controllers\AdminApi\CategoryController::class,[
-                'except' => ['destroy'],
+                'except' => ['destroy'], // 禁用的资源，除了destroy都能用
             ]);
         });
     });

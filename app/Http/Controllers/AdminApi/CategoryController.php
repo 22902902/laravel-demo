@@ -36,6 +36,8 @@ class CategoryController extends BaseControllers
         // 表单验证
         $request->validate([
             'name' => 'required|max:16'
+        ], [
+            'name.required' => '分类名称不能为空',
         ]);
     }
 
