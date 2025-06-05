@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Controllers\BaseControllers;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 
@@ -29,7 +30,7 @@ class CategoryController extends BaseControllers
     }
 
     /**
-     * 添加分类
+     * 添加分类， 最大三级分类
      */
     public function store(Request $request)
     {
@@ -39,6 +40,28 @@ class CategoryController extends BaseControllers
         ], [
             'name.required' => '分类名称不能为空',
         ]);
+
+//        Category::create(
+//            $request->only([
+//                'name', 'pid'
+//            ])
+//        );
+
+        $pid = $request->input('pid', 0);
+        $level = $pid == 0 ? 1 : (Category::find($pid)->level + 1);
+
+        if($level > 3) return $this->response->errorBadRequest('不能超过3级分类');
+
+        $insertData = [
+            'name' => $request->input('name'),
+            'pid' => $pid,
+            'level' => $level, // 分类等级
+        ];
+
+        Category::create($insertData);
+
+
+        return $this->response->created();
     }
 
     /**
